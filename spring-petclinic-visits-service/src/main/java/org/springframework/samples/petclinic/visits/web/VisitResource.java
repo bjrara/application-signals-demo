@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import javax.ws.rs.QueryParam;
 
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.samples.petclinic.visits.aws.DdbService;
 import org.springframework.samples.petclinic.visits.model.Visit;
+import org.springframework.samples.petclinic.visits.model.VisitRecord;
+import org.springframework.samples.petclinic.visits.model.VisitRecordRepository;
 import org.springframework.samples.petclinic.visits.model.VisitRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,9 +60,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 class VisitResource {
 
     private final VisitRepository visitRepository;
+    private final VisitRecordRepository visitRecordRepository;
 
     private final DdbService ddbService;
-
 
     @PostMapping("owners/*/pets/{petId}/visits")
     @ResponseStatus(HttpStatus.CREATED)
@@ -93,6 +96,11 @@ class VisitResource {
 //        return visitRepository.findByPetId(petId);
         log.info("Reaching Get api: /owners/*/pets/{petId}/visits for petId: {}", petId);
         return new Visits(visitRepository.findByPetId(petId));
+    }
+
+    @GetMapping("owners/*/pets/{petId}/reports")
+    public List<VisitRecord> downloadReports(@PathVariable("petId") @Min(1) int petId, @QueryParam("limit") int limit) {
+        return visitRecordRepository.fetchRecords(petId, limit);
     }
 
     @ExceptionHandler(InvalidDateException.class)

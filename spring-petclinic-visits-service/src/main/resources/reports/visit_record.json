@@ -1,0 +1,43 @@
+{
+  "visitId": "12345",
+  "petId": "1",
+  "visitDetails": {
+    "date": "2024-11-20",
+    "time": "10:30 AM",
+    "reason": "Annual checkup and vaccinations",
+    "notes": [
+      "Thank you for bringing your pet to Happy Tails Veterinary Clinic. Your pet has just been spayed. ",
+      "The long name for this procedure is ovariohysterectomy, which involves removal of the ovaries",
+      "and uterus so your pet will not come into heat or get pregnant. There are also many other benefits to",
+      "having your pet spayed, which include reducing her risk of mammary cancer by 7 times! The following",
+      "are our recommendations for the optimal recovery of your pet:",
+      "Activity: Please keep indoors or closely confined for the next 7-10 days so the incision can stay clean",
+      "and dry. No jumping, running, or rough play for 10-14 days. Leash walks only are recommended. After",
+      "10-14 days, your pet can return to normal activity. Excessive activity often leads to re-injury or serious",
+      "complications that may necessitate re-operation. This means additional expense to you and added",
+      "discomfort to your pet.",
+      "Anesthesia: When your pet is discharged, she may still be groggy from the anesthesia. She may appear",
+      "depressed, wobbly and may tremble. She should be allowed to recover in a quiet room at home away",
+      "from other pets. Check on her progress intermittently.",
+      "Food/Water: First offer only small amounts of water, and if she seems alert and hungry, offer small",
+      "amounts of food (~ 1/3 of usual meal). Every pet recovers differently. Some pets may not want anything",
+      "at all the first night. If your pet vomits, withhold food until the next morning. Call our office immediately",
+      "if vomiting persists. By the next morning she should be alert and have a normal appetite. She can then",
+      "be fed her normal volume of food.",
+      "Bathing: Do not bathe your pet for 10 days (until the incision is healed). The incision should stay clean",
+      "and dry.",
+      "Monitoring: Check the incision daily for signs of excessive redness, swelling, or discharge. If any of",
+      "these are noted, please contact us immediately. If your pet is licking or chewing excessively at the",
+      "incision line, please contact us for placement of an Elizabethan collar.",
+      "Pain Medication: If you requested pain medication to be given, the medication should control pain for",
+      "up to 48 hours following surgery. If medication has been prescribed and dispensed, please give this",
+      "medication to your pet according to label instructions. "
+    ],
+    "charges": {
+      "consultationFee": 50.0,
+      "vaccinationCost": 75.0,
+      "totalCost": 125.0,
+      "currency": "USD"
+    }
+  }
+}
