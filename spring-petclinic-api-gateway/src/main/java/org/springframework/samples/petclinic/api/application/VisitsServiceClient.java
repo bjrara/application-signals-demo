@@ -27,6 +27,7 @@ import org.springframework.samples.petclinic.api.dto.VisitRecords;
 import org.springframework.samples.petclinic.api.dto.Visits;
 import org.springframework.samples.petclinic.api.utils.WellKnownAttributes;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.server.ResponseStatusException;
@@ -43,6 +44,10 @@ import static java.util.stream.Collectors.joining;
 @RequiredArgsConstructor
 public class VisitsServiceClient {
 
+    final int size = 16 * 1024 * 1024;
+    final ExchangeStrategies strategies = ExchangeStrategies.builder()
+            .codecs(codecs -> codecs.defaultCodecs().maxInMemorySize(size))
+            .build();
     // Could be changed for testing purpose
     private String hostname = "http://visits-service/";
 
@@ -76,9 +81,9 @@ public class VisitsServiceClient {
     public Mono<VisitRecords> getVisitRecordsForOwnersPets(final int ownerId, final int petId, final int limit) {
         // Span.current().setAttribute(WellKnownAttributes.REMOTE_APPLICATION, "visits-service");
         // Span.current().setAttribute(WellKnownAttributes.REMOTE_OPERATION, "/owners/*/pets/{petId}/visits");
-        return webClientBuilder.build()
+        return webClientBuilder.exchangeStrategies(strategies).build()
                 .get()
-                .uri(hostname + "owners/{ownerId}/pets/{petId}/reports?limit=", ownerId, petId, limit)
+                .uri(hostname + "owners/{ownerId}/pets/{petId}/reports?limit={limit}", ownerId, petId, limit)
                 .retrieve()
                 .bodyToMono(VisitRecords.class);
     }
