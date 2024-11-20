@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.ws.rs.QueryParam;
+
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -86,6 +88,11 @@ public class ApiController {
     @GetMapping(value = "visit/owners/{ownerId}/pets/{petId}/visits")
     public Mono<Visits> getVisits(final @PathVariable int ownerId, final @PathVariable int petId) {
         return visitsServiceClient.getVisitsForOwnersPets(ownerId, petId);
+    }
+
+    @GetMapping(value = "visit/owners/{ownerId}/pets/{petId}/reports")
+    public Mono<VisitRecords> getVisitReports(final @PathVariable int ownerId, final @PathVariable int petId, final @QueryParam("limit") int limit) {
+        return visitsServiceClient.getVisitRecordsForOwnersPets(ownerId, petId, limit);
     }
 
     @PostMapping(value = "visit/owners/{ownerId}/pets/{petId}/visits")

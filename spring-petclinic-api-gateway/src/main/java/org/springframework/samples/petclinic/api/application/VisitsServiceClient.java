@@ -23,6 +23,7 @@ import io.opentelemetry.instrumentation.annotations.WithSpan;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.samples.petclinic.api.dto.VisitDetails;
+import org.springframework.samples.petclinic.api.dto.VisitRecords;
 import org.springframework.samples.petclinic.api.dto.Visits;
 import org.springframework.samples.petclinic.api.utils.WellKnownAttributes;
 import org.springframework.stereotype.Component;
@@ -69,6 +70,17 @@ public class VisitsServiceClient {
             .retrieve()
             .bodyToMono(Visits.class);
 
+    }
+
+    @WithSpan
+    public Mono<VisitRecords> getVisitRecordsForOwnersPets(final int ownerId, final int petId, final int limit) {
+        // Span.current().setAttribute(WellKnownAttributes.REMOTE_APPLICATION, "visits-service");
+        // Span.current().setAttribute(WellKnownAttributes.REMOTE_OPERATION, "/owners/*/pets/{petId}/visits");
+        return webClientBuilder.build()
+                .get()
+                .uri(hostname + "owners/{ownerId}/pets/{petId}/reports?limit=", ownerId, petId, limit)
+                .retrieve()
+                .bodyToMono(VisitRecords.class);
     }
 
     @WithSpan

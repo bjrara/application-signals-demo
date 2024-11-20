@@ -99,8 +99,8 @@ class VisitResource {
     }
 
     @GetMapping("owners/*/pets/{petId}/reports")
-    public List<VisitRecord> downloadReports(@PathVariable("petId") @Min(1) int petId, @QueryParam("limit") int limit) {
-        return visitRecordRepository.fetchRecords(petId, limit);
+    public VisitRecords downloadReports(@PathVariable("petId") @Min(1) int petId, @QueryParam("limit") int limit) {
+        return new VisitRecords(visitRecordRepository.fetchRecords(petId, limit));
     }
 
     @ExceptionHandler(InvalidDateException.class)
@@ -124,5 +124,10 @@ class VisitResource {
     @Value
     static class Visits {
         List<Visit> items;
+    }
+
+    @Value
+    static class VisitRecords {
+        List<VisitRecord> items;
     }
 }
