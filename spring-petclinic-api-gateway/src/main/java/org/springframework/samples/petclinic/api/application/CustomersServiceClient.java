@@ -18,6 +18,8 @@
  */
 package org.springframework.samples.petclinic.api.application;
 
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.instrumentation.api.instrumenter.LocalRootSpan;
 import lombok.extern.slf4j.Slf4j;
 import io.opentelemetry.instrumentation.annotations.SpanAttribute;
 import io.opentelemetry.instrumentation.annotations.WithSpan;
@@ -68,6 +70,7 @@ public class CustomersServiceClient {
 
     @WithSpan
     public Mono<Void> addOwner(final OwnerRequest ownerRequest) {
+        LocalRootSpan.current().setAttribute("ownerId", "myOwner");
         return webClientBuilder.build().post()
             .uri("http://customers-service/owners")
             .body(Mono.just(ownerRequest), OwnerRequest.class)

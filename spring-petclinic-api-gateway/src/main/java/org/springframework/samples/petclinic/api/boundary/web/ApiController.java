@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 package org.springframework.samples.petclinic.api.boundary.web;
 
+import io.opentelemetry.api.trace.Span;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.samples.petclinic.api.application.*;
@@ -48,6 +49,7 @@ public class ApiController {
 
     @PostMapping(value = "customer/owners")
     public Mono<Void> addOwner(@RequestBody OwnerRequest ownerRequest) {
+        Span.current().setAttribute("Tenant", "myId");
         return customersServiceClient.addOwner(ownerRequest);
     }
 
